@@ -21,7 +21,7 @@ router.post("/compression",upload.single("avatar"),async(req, res) => {
       console.log("Compression Successful")
       res.send("Compression Successful")
   }catch(e){
-    res.send({Error:e})
+    res.send({Error:e.message})
   }
 });
 
@@ -55,7 +55,7 @@ router.post("/convert", upload.single("avatar"), (req, res) => {
         res.send({ File_Download_Link: result.file.fileInfo.Url });
       })
       .catch((error) => {
-        res.status(400).send({ error: error });
+        res.status(400).send({ error: error.message });
       });
   }
 });
