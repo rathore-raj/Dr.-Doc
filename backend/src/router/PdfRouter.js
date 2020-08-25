@@ -49,15 +49,21 @@ router.post("/convert", upload.single("avatar"), (req, res) => {
 
 
 router.post("/upload", uploads, async(req, res, next) => {
-  const text = await gVision(req.file.path);
-  // fs.unlink(req.file.path, err => {
-  //     if (err) return console.log(err);
-  //     console.log('photo deleted');
-  // });
-  res.status(200).json({
-      text, 
-      filename: req.file.filename
-  });
+
+  try{
+    const text = await gVision(req.file.path);
+    // fs.unlink(req.file.path, err => {
+    //     if (err) return console.log(err);
+    //     console.log('photo deleted');
+    // });
+    res.status(200).json({
+        text, 
+        filename: req.file.filename
+    }); 
+  }catch(e){
+    res.send({Error:e.message})
+  }
+  
 });
 
 module.exports = router;
