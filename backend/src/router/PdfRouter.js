@@ -18,7 +18,7 @@ router.post("/merge",upload.array("avatar"),(req, res) => {
         if (err) {
          throw new Error(err)
         }
-        res.send({Path_To_File:`${appDir}/public/output/Merged-${req.files[0].originalname}`});
+        res.send("Success!");
       }
     );
   },(error, req, res, next) => {
