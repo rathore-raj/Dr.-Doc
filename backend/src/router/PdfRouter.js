@@ -7,9 +7,22 @@ const {uploads} = require('../middleware/multerForGV')
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 const gVision = require("../js/gVision");
+const ilovepdfSDK = require('ilovepdf-sdk');
+const sdk = new ilovepdfSDK(process.env.ILOVEPDF_PROJECT_PUBLICKEY,process.env.ILOVEPDF_PROJECT_SECRETKEY);
 
-router.get("/", (req, res) => {
-  res.send("Hello World");
+
+
+router.post("/compression",upload.single("avatar"),async(req, res) => {
+  try{
+      const task = await sdk.createTask('compress');
+      await task.addFile(req.file.path);
+      await task.process({CompressionLevel:"extreme"});
+      await task.download(`${appDir}/public/output/compressed-${req.file.originalname}`);
+      console.log("Compression Successful")
+      res.send("Compression Successful")
+  }catch(e){
+    res.send({Error:e})
+  }
 });
 
 router.post("/merge",upload.array("avatar"),(req, res) => {
