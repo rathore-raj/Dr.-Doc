@@ -28,6 +28,48 @@ router.post("/compression", upload.single("avatar"), async (req, res) => {
   }
 });
 
+router.post("/lock", upload.single("avatar"), async (req, res) => {
+  convertapi.convert('encrypt', {File:req.file.path,PdfUserPasswordNew:'MyPassword',PdfOwnerPasswordNew:"MyPassword"},'pdf')
+  .then(function(result) {
+    result.saveFiles(`${appDir}/public/output/locked-${req.file.originalname}`);
+    console.log("PDF Locked!")
+    res.send("PDF Locked!")
+}).catch((error)=>{
+  res.send({Error:error.message})
+})
+});
+
+router.post("/unlock", upload.single("avatar"), async (req, res) => {
+  try {
+    const task = await sdk.createTask("unlock");
+    await task.addFile(req.file.path);
+    await task.process();
+    await task.download(
+      `${appDir}/public/output/Unlocked-${req.file.originalname}`
+    );
+    console.log("Unlock Successful");
+    res.send("Unlock Successful");
+  } catch (e) {
+    res.send({ Error: e.message });
+  }
+});
+
+
+ router.post("/pageNumber",upload.single("avatar"),async(req,res)=>{
+   try{
+    const task = await sdk.createTask("pagenumber");
+    await task.addFile(req.file.path);
+    await task.process();
+    await task.download(
+      `${appDir}/public/output/Page_Number_Added-${req.file.originalname}`
+    );
+    console.log("Page Number Added");
+    res.send("Page Number Added");
+   }catch(e){
+    res.send({ Error: e.message });
+   }
+ })
+
 router.post(
   "/merge",
   upload.array("avatar"),
