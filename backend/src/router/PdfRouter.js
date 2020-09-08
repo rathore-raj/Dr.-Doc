@@ -28,16 +28,28 @@ router.post("/compression", upload.single("avatar"), async (req, res) => {
   }
 });
 
-router.post("/lock", upload.single("avatar"), async (req, res) => {
+router.post("/encrypt", upload.single("avatar"), async (req, res) => {
   convertapi.convert('encrypt', {File:req.file.path,PdfUserPasswordNew:'MyPassword',PdfOwnerPasswordNew:"MyPassword"},'pdf')
   .then(function(result) {
-    result.saveFiles(`${appDir}/public/output/locked-${req.file.originalname}`);
-    console.log("PDF Locked!")
-    res.send("PDF Locked!")
+    result.saveFiles(`${appDir}/public/output/encrypted-${req.file.originalname}`);
+    console.log("PDF encrypted!")
+    res.send("PDF encrypted!")
 }).catch((error)=>{
   res.send({Error:error.message})
 })
 });
+
+router.post("/decrypt", upload.single("avatar"), async (req, res) => {
+  convertapi.convert('decrypt', {File:req.file.path,Password:"MyPassword"},'pdf')
+  .then(function(result) {
+    result.saveFiles(`${appDir}/public/output/decrypted-${req.file.originalname}`);
+    console.log("PDF decrypted!")
+    res.send("PDF decrypted!")
+}).catch((error)=>{
+  res.send({Error:error.message})
+})
+});
+
 
 router.post("/unlock", upload.single("avatar"), async (req, res) => {
   try {
@@ -70,10 +82,7 @@ router.post("/unlock", upload.single("avatar"), async (req, res) => {
    }
  })
 
-router.post(
-  "/merge",
-  upload.array("avatar"),
-  (req, res) => {
+router.post("/merge",upload.array("avatar"),(req, res) => {
     const paths = req.files.map((file) => file.path);
     merge(
       paths,
