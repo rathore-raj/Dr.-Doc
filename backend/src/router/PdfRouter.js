@@ -29,7 +29,7 @@ router.post("/compression", upload.single("avatar"), async (req, res) => {
 });
 
 router.post("/encrypt", upload.single("avatar"), async (req, res) => {
-  convertapi.convert('encrypt', {File:req.file.path,PdfUserPasswordNew:'MyPassword',PdfOwnerPasswordNew:"MyPassword"},'pdf')
+  convertapi.convert('encrypt', {File:req.file.path,PdfUserPasswordNew:req.body.password,PdfOwnerPasswordNew:req.body.password},'pdf')
   .then(function(result) {
     result.saveFiles(`${appDir}/public/output/encrypted-${req.file.originalname}`);
     console.log("PDF encrypted!")
@@ -40,7 +40,7 @@ router.post("/encrypt", upload.single("avatar"), async (req, res) => {
 });
 
 router.post("/decrypt", upload.single("avatar"), async (req, res) => {
-  convertapi.convert('decrypt', {File:req.file.path,Password:"MyPassword"},'pdf')
+  convertapi.convert('decrypt', {File:req.file.path,Password:req.body.password},'pdf')
   .then(function(result) {
     result.saveFiles(`${appDir}/public/output/decrypted-${req.file.originalname}`);
     console.log("PDF decrypted!")
