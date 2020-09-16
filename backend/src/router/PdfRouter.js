@@ -1,3 +1,4 @@
+
 /**
  * PDF manipulation related routes
  */
@@ -24,7 +25,6 @@ const sdk = new ilovepdfSDK(
 );
 
 const router = express.Router();
-
 
 router.post("/compression", upload.single("avatar"), async (req, res) => {
   try {
