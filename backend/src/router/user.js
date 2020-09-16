@@ -1,7 +1,16 @@
+/**
+ * User account related routes
+ */
+
 const express = require("express");
-const User = require("../model/user.js");
-const auth = require("../middleware/auth.js");
 const axios = require("axios");
+
+// models
+const User = require("../model/user.js");
+
+// middlewares
+const auth = require("../middleware/auth.js");
+
 const router = express.Router();
 
 router.post("/users", async (req, res) => {

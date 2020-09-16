@@ -1,17 +1,30 @@
+
+/**
+ * PDF manipulation related routes
+ */
+
+var path = require("path");
+
 const express = require("express");
 const merge = require("easy-pdf-merge");
-const convertapi = require("convertapi")(process.env.CONVERTAPI_SECRET); //Add convertapi Secret Key
-const { upload } = require("../middleware/multer.js");
-const router = express.Router();
-const { uploads } = require("../middleware/multerForGV");
-var path = require("path");
-var appDir = path.dirname(require.main.filename);
-const gVision = require("../js/gVision");
+
 const ilovepdfSDK = require("ilovepdf-sdk");
+const convertapi = require("convertapi")(process.env.CONVERTAPI_SECRET);
+
+// middlewares
+const { upload } = require("../middleware/multer.js");
+const { uploads } = require("../middleware/multerForGV");
+
+const gVision = require("../js/gVision");
+
+var appDir = path.dirname(require.main.filename);
+
 const sdk = new ilovepdfSDK(
   process.env.ILOVEPDF_PROJECT_PUBLICKEY,
   process.env.ILOVEPDF_PROJECT_SECRETKEY
 );
+
+const router = express.Router();
 
 router.post("/compression", upload.single("avatar"), async (req, res) => {
   try {
