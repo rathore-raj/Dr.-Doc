@@ -1,6 +1,6 @@
 # Dr.DOC
 
-## backend
+## Backend
 
 ### local setup  instructions
 
@@ -12,7 +12,7 @@
 
 #### installing dependencies
 
-* install npm modules, from `/bckend` folder here
+* install npm modules, from `/backend` folder here
 > root/backend$ npm install
 * needs node version >= v12.18.3
 
@@ -45,6 +45,6 @@
 * Test documents can be found at `/test documents` folder.
 
 
-## frontend
+## Frontend
 
 soon
