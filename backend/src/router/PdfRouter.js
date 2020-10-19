@@ -1,4 +1,3 @@
-
 /**
  * PDF manipulation related routes
  */
@@ -37,32 +36,51 @@ router.post("/compression", upload.single("avatar"), async (req, res) => {
     console.log("Compression Successful");
     res.send("Compression Successful");
   } catch (e) {
-    res.send({ Error: e.message });
+    res.status(400).send({ Error: e.message });
   }
 });
 
 router.post("/encrypt", upload.single("avatar"), async (req, res) => {
-  convertapi.convert('encrypt', {File:req.file.path,PdfUserPasswordNew:req.body.password,PdfOwnerPasswordNew:req.body.password},'pdf')
-  .then(function(result) {
-    result.saveFiles(`${appDir}/public/output/encrypted-${req.file.originalname}`);
-    console.log("PDF encrypted!")
-    res.send("PDF encrypted!")
-}).catch((error)=>{
-  res.send({Error:error.message})
-})
+  convertapi
+    .convert(
+      "encrypt",
+      {
+        File: req.file.path,
+        PdfUserPasswordNew: req.body.password,
+        PdfOwnerPasswordNew: req.body.password,
+      },
+      "pdf"
+    )
+    .then(function (result) {
+      result.saveFiles(
+        `${appDir}/public/output/encrypted-${req.file.originalname}`
+      );
+      console.log("PDF encrypted!");
+      res.send("PDF encrypted!");
+    })
+    .catch((error) => {
+      res.status(400).send({ Error: error.message });
+    });
 });
 
 router.post("/decrypt", upload.single("avatar"), async (req, res) => {
-  convertapi.convert('decrypt', {File:req.file.path,Password:req.body.password},'pdf')
-  .then(function(result) {
-    result.saveFiles(`${appDir}/public/output/decrypted-${req.file.originalname}`);
-    console.log("PDF decrypted!")
-    res.send("PDF decrypted!")
-}).catch((error)=>{
-  res.send({Error:error.message})
-})
+  convertapi
+    .convert(
+      "decrypt",
+      { File: req.file.path, Password: req.body.password },
+      "pdf"
+    )
+    .then(function (result) {
+      result.saveFiles(
+        `${appDir}/public/output/decrypted-${req.file.originalname}`
+      );
+      console.log("PDF decrypted!");
+      res.send("PDF decrypted!");
+    })
+    .catch((error) => {
+      res.status(400).send({ Error: error.message });
+    });
 });
-
 
 router.post("/unlock", upload.single("avatar"), async (req, res) => {
   try {
@@ -75,13 +93,12 @@ router.post("/unlock", upload.single("avatar"), async (req, res) => {
     console.log("Unlock Successful");
     res.send("Unlock Successful");
   } catch (e) {
-    res.send({ Error: e.message });
+    res.status(400).send({ Error: e.message });
   }
 });
 
-
- router.post("/pageNumber",upload.single("avatar"),async(req,res)=>{
-   try{
+router.post("/pageNumber", upload.single("avatar"), async (req, res) => {
+  try {
     const task = await sdk.createTask("pagenumber");
     await task.addFile(req.file.path);
     await task.process();
@@ -90,12 +107,15 @@ router.post("/unlock", upload.single("avatar"), async (req, res) => {
     );
     console.log("Page Number Added");
     res.send("Page Number Added");
-   }catch(e){
-    res.send({ Error: e.message });
-   }
- })
+  } catch (e) {
+    res.status(400).send({ Error: e.message });
+  }
+});
 
-router.post("/merge",upload.array("avatar"),(req, res) => {
+router.post(
+  "/merge",
+  upload.array("avatar"),
+  (req, res) => {
     const paths = req.files.map((file) => file.path);
     merge(
       paths,
@@ -115,26 +135,33 @@ router.post("/merge",upload.array("avatar"),(req, res) => {
   }
 );
 
-router.post("/convert", upload.single("avatar"), (req, res) => {
-  if (!req.file.originalname.match(/\.(doc||docx||ppt||odt||html||xlsv||xlsx)/)) {
-    console.log("Upload Document File!");
-    throw new Error("Upload Document File!");
-  } else {
-    convertapi
-      .convert("pdf", { File: req.file.path })
-      .then((result) => {
-        console.log("Result", result.file.fileInfo);
-        res.send({ File_Download_Link: result.file.fileInfo.Url });
-      })
-      .catch((error) => {
-        res.status(400).json({ error: error.message });
-      });
+router.post(
+  "/convert",
+  upload.single("avatar"),
+  (req, res) => {
+    if (
+      !req.file.originalname.match(/\.(doc||docx||ppt||odt||html||xlsv||xlsx)/)
+    ) {
+      console.log("Upload Document File!");
+      throw new Error("Upload Document File!");
+    } else {
+      convertapi
+        .convert("pdf", { File: req.file.path })
+        .then((result) => {
+          console.log("Result", result.file.fileInfo);
+          res.send({ File_Download_Link: result.file.fileInfo.Url });
+        })
+        .catch((error) => {
+          res.status(400).json({ error: error.message });
+        });
+    }
+  },
+  (error, req, res, next) => {
+    res.status(400).send({
+      error: error.message,
+    });
   }
-},(error, req, res, next) => {
-  res.status(400).send({
-    error: error.message,
-  });
-});
+);
 
 router.post("/upload", uploads, async (req, res, next) => {
   try {
@@ -148,7 +175,7 @@ router.post("/upload", uploads, async (req, res, next) => {
       filename: req.file.filename,
     });
   } catch (e) {
-    res.send({ Error: e.message });
+    res.status(400).send({ Error: e.message });
   }
 });
 
