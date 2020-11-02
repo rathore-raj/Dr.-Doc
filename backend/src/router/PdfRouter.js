@@ -33,18 +33,14 @@ router.post("/compression", upload.single("avatar"), async (req, res) => {
     await task.download(
       `${appDir}/public/output/compressed-${req.file.originalname}`
     );
-    console.log("Compression Successful");
-    res.send("Compression Successful");
+    res.status(200).send({Message:"Compression Successful"});
   } catch (e) {
     res.status(400).send({ Error: e.message });
   }
 });
 
 router.post("/encrypt", upload.single("avatar"), async (req, res) => {
-  convertapi
-    .convert(
-      "encrypt",
-      {
+  convertapi.convert("encrypt",{
         File: req.file.path,
         PdfUserPasswordNew: req.body.password,
         PdfOwnerPasswordNew: req.body.password,
@@ -55,8 +51,7 @@ router.post("/encrypt", upload.single("avatar"), async (req, res) => {
       result.saveFiles(
         `${appDir}/public/output/encrypted-${req.file.originalname}`
       );
-      console.log("PDF encrypted!");
-      res.send("PDF encrypted!");
+      res.status(200).send({Message:"PDF encrypted!"});
     })
     .catch((error) => {
       res.status(400).send({ Error: error.message });
@@ -74,8 +69,7 @@ router.post("/decrypt", upload.single("avatar"), async (req, res) => {
       result.saveFiles(
         `${appDir}/public/output/decrypted-${req.file.originalname}`
       );
-      console.log("PDF decrypted!");
-      res.send("PDF decrypted!");
+      res.status(200).send({Message:"PDF decrypted!"});
     })
     .catch((error) => {
       res.status(400).send({ Error: error.message });
@@ -90,8 +84,7 @@ router.post("/unlock", upload.single("avatar"), async (req, res) => {
     await task.download(
       `${appDir}/public/output/Unlocked-${req.file.originalname}`
     );
-    console.log("Unlock Successful");
-    res.send("Unlock Successful");
+    res.status(200).send({Message:"Unlock Successful"});
   } catch (e) {
     res.status(400).send({ Error: e.message });
   }
@@ -105,8 +98,7 @@ router.post("/pageNumber", upload.single("avatar"), async (req, res) => {
     await task.download(
       `${appDir}/public/output/Page_Number_Added-${req.file.originalname}`
     );
-    console.log("Page Number Added");
-    res.send("Page Number Added");
+    res.status(200).send({Message:"Page Number Added"});
   } catch (e) {
     res.status(400).send({ Error: e.message });
   }
@@ -124,7 +116,7 @@ router.post(
         if (err) {
           throw new Error(err);
         }
-        res.send("Success!");
+        res.status(200).send({Message:"Success!"});
       }
     );
   },
@@ -142,26 +134,20 @@ router.post(
     if (
       !req.file.originalname.match(/\.(doc||docx||ppt||odt||html||xlsv||xlsx)/)
     ) {
-      console.log("Upload Document File!");
       throw new Error("Upload Document File!");
     } else {
       convertapi
         .convert("pdf", { File: req.file.path })
         .then((result) => {
-          console.log("Result", result.file.fileInfo);
-          res.send({ File_Download_Link: result.file.fileInfo.Url });
+          res
+            .status(200)
+            .send({ File_Download_Link: result.file.fileInfo.Url });
         })
         .catch((error) => {
           res.status(400).json({ error: error.message });
         });
     }
-  },
-  (error, req, res, next) => {
-    res.status(400).send({
-      error: error.message,
-    });
-  }
-);
+  });
 
 router.post("/upload", uploads, async (req, res, next) => {
   try {
@@ -170,7 +156,7 @@ router.post("/upload", uploads, async (req, res, next) => {
     //     if (err) return console.log(err);
     //     console.log('photo deleted');
     // });
-    res.status(200).json({
+    res.status(200).send({
       text,
       filename: req.file.filename,
     });

@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
-    "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
     "convertapi": "^1.6.0",
     "cors": "^2.8.5",
@@ -21,10 +20,10 @@
     "ilovepdf-sdk": "0.0.5",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.10.11",
     "multer": "^1.4.2",
     "node-pre-gyp": "^0.15.0",
-    "nodemon": "^2.0.5",
+    "nodemon": "^2.0.6",
     "validator": "^13.1.17"
   }
 }

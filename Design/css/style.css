@@ -1,0 +1,145 @@
+.inner li {
+  display: block;
+}
+
+a.logo {
+  color: #f23030;
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 1px;
+}
+
+a.login {
+    color: #130369;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.header {
+  border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.title h1 {
+  line-height: 36px;
+  font-size: 30px;
+  font-weight: 600;
+  color: rgb(33, 33, 33);
+  text-align: center;
+  margin: 0px;
+}
+
+.title p {
+  line-height: 30px;
+  font-size: 22px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 300;
+  color: rgb(33, 33, 33);
+  text-align: center;
+  margin: 0px;
+}
+
+.inner h2 {
+  margin-top: 30px;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+}
+
+.block-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.block-icon svg {
+  fill: white;
+}
+
+.inner p {
+  line-height: 18px;
+  font-size: 14px;
+  font-weight: 400;
+  color: white;
+}
+
+.padding-12 {
+  padding: 12px;
+}
+
+.convert-pdf {
+  background: rgba(255, 76, 35, 1);
+}
+
+.c-pdf {
+  background: rgba(242, 48, 48, 1);
+}
+
+.ppt-pdf {
+  background: rgba(255, 121, 25, 1);
+}
+
+.pdf-ppt {
+  background: rgba(255, 159, 25, 1);
+}
+
+.jpg-pdf {
+  background: rgba(61, 153, 245, 1);
+}
+
+.pdf-jpg {
+  background: rgba(121, 97, 242, 1);
+}
+
+.excel-pdf {
+  background: rgba(153, 102, 255, 1);
+}
+
+.pdf-excel {
+  background: rgba(230, 103, 230, 1);
+}
+
+.footer h4 {
+  font-weight: 400;
+  font-size: 16px;
+  color: rgb(26, 26, 26);
+}
+
+.footer {
+  background-color: rgb(244, 244, 244);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+/* overwritten bt css */
+.col-12.col-sm-3 {
+  padding: 1px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Responsive css */
+
+@media screen and (max-width: 767px) {
+  .header {
+    text-align: center !important;
+  }
+
+  .footer {
+    position: unset;
+    padding: 0 15px;
+}
+
+  /* overwritten bt css */
+
+  .col-12.col-sm-3 {
+    padding: 5px 15px;
+  }
+}
