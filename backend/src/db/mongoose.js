@@ -5,7 +5,7 @@ const db = mongoose
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
-  }) //Add MongoDb URL
+  })
   .then((data) => {
     console.log("Connected To Database");
   })
