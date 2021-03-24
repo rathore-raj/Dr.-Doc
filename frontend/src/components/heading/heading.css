@@ -1,0 +1,22 @@
+.heading {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.heading h2 {
+  line-height: 36px;
+  font-size: 30px;
+  font-weight: 600;
+  color: rgb(33, 33, 33);
+  text-align: center;
+  margin: 0px;
+}
+.heading p {
+  line-height: 30px;
+  font-size: 22px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 300;
+  color: rgb(33, 33, 33);
+  text-align: center;
+  margin: 0px;
+}

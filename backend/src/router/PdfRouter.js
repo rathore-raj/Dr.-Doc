@@ -26,6 +26,7 @@ const sdk = new ilovepdfSDK(
 const router = express.Router();
 
 router.post("/compression", upload.single("avatar"), async (req, res) => {
+  console.log("file",req.file)
   try {
     const task = await sdk.createTask("compress");
     await task.addFile(req.file.path);

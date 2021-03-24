@@ -1,0 +1,28 @@
+.header {
+  padding: 15px 225px;
+  display: flex;
+  border-bottom: 1px solid rgb(224, 224, 224);
+}
+.header h1 {
+  margin: 0;
+  color: #f23030;
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 1px;
+}
+.header div {
+  width: 50%;
+}
+
+.header div:nth-child(2) {
+  display: flex;
+  text-align: end;
+  align-items: center;
+}
+.header a {
+  text-decoration: none;
+  margin-left: auto;
+  color: #130369;
+  font-weight: 600;
+  font-size: 18px;
+}
