@@ -10,21 +10,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/vision": "^2.1.2",
-    "bcrypt": "^5.0.0",
-    "convertapi": "^1.6.0",
+    "@google-cloud/vision": "^2.3.1",
+    "bcrypt": "^5.0.1",
+    "convertapi": "^1.11.0",
     "cors": "^2.8.5",
-    "easy-pdf-merge": "^0.2.5",
+    "easy-pdf-merge": "^0.2.6",
     "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "ilovepdf-sdk": "0.0.5",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.2",
-    "mongoose": "^5.10.11",
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.12.2",
     "multer": "^1.4.2",
     "node-pre-gyp": "^0.15.0",
-    "nodemailer": "^6.4.16",
-    "nodemon": "^2.0.6",
-    "validator": "^13.1.17"
+    "nodemailer": "^6.5.0",
+    "nodemon": "^2.0.7",
+    "validator": "^13.5.2"
   }
 }

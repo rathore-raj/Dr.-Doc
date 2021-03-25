@@ -1,9 +1,10 @@
 .main-div {
   text-align: center;
-  text-transform: uppercase;
+  text-transform: capitalize;
   padding: 120px;
   font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
   height: 100%;
+  background-color: rgb(244, 244, 244);
 }
 .main-div p {
     margin-bottom: 60px;

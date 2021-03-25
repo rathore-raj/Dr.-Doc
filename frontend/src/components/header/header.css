@@ -1,8 +1,5 @@
-.header {
-  padding: 15px 225px;
-  display: flex;
-  border-bottom: 1px solid rgb(224, 224, 224);
-}
+/* 
+
 .header h1 {
   margin: 0;
   color: #f23030;
@@ -25,4 +22,18 @@
   color: #130369;
   font-weight: 600;
   font-size: 18px;
+} */
+.header {
+  padding: 15px 225px;
+ /* display: flex; */
+ border-bottom: 1px solid rgb(224, 224, 224);
+ text-align: center;
+ text-transform: uppercase;
+}
+.header h1 {
+  margin: 0;
+  color: #f23030;
+  font-weight: 800;
+  font-size: 50px;
+  letter-spacing: 1px;
 }

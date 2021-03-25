@@ -2,6 +2,7 @@
  * PDF manipulation related routes
  */
 
+const fs = require("fs");
 var path = require("path");
 
 const express = require("express");
@@ -26,15 +27,19 @@ const sdk = new ilovepdfSDK(
 const router = express.Router();
 
 router.post("/compression", upload.single("avatar"), async (req, res) => {
-  console.log("file",req.file)
   try {
     const task = await sdk.createTask("compress");
     await task.addFile(req.file.path);
     await task.process({ CompressionLevel: "extreme" });
-    await task.download(
+    const PDF = await task.download(
       `${appDir}/public/output/compressed-${req.file.originalname}`
     );
-    res.status(200).send({ Message: "Compression Successful" });
+    var data = fs.readFileSync(
+      `${appDir}/public/output/compressed-${req.file.originalname}`
+    );
+    res.contentType("application/pdf");
+    res.status(200).send({ data, Message: "Compression Successful" });
+    // res.status(200).send({ Message: "Compression Successful" });
   } catch (e) {
     res.status(400).send({ Error: e.message });
   }
@@ -140,6 +145,7 @@ router.post("/convert", upload.single("avatar"), (req, res) => {
     convertapi
       .convert("pdf", { File: req.file.path })
       .then((result) => {
+        // res.download(result.file.fileInfo.Url)
         res.status(200).send({ File_Download_Link: result.file.fileInfo.Url });
       })
       .catch((error) => {
@@ -151,10 +157,6 @@ router.post("/convert", upload.single("avatar"), (req, res) => {
 router.post("/upload", uploads, async (req, res, next) => {
   try {
     const text = await gVision(req.file.path);
-    // fs.unlink(req.file.path, err => {
-    //     if (err) return console.log(err);
-    //     console.log('photo deleted');
-    // });
     res.status(200).send({
       text,
       filename: req.file.filename,
