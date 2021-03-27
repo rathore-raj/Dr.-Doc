@@ -10,9 +10,9 @@ const useStyles = makeStyles({
   root: {
     maxWidth: "280px",
     display: "inline-block",
-    margin: "0 1px",
     padding: "0px 0px",
     cursor: "pointer",
+    margin: "0 auto",
   },
   bullet: {
     display: "inline-block",
@@ -63,7 +63,7 @@ export default function OutlinedCard(props) {
         style={{ backgroundColor: props.data.Backgroundcolor }}
       >
         <CardContent>
-          <span style={{color:"white"}}>{props.data.Icon}</span>
+          <span style={{ color: "white" }}>{props.data.Icon}</span>
           <Typography
             className={classes.title}
             color="textSecondary"

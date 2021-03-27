@@ -1,12 +1,9 @@
 .footer {
   background-color: rgb(244, 244, 244);
-  height: 72px;
   display: flex;
-  align-items: center;
-  width: 100%;
-  margin: 0;
 }
 
 .footer p {
-  padding: 0 240px;
+  margin: 0 auto;
+  padding: 20px;
 }

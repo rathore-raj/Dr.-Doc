@@ -6,12 +6,6 @@ class Header extends react.Component {
     return (
       <header className="header">
         <h1>Dr.Doc</h1>
-        {/* <div>
-          <h1>Dr.Doc</h1>
-        </div>
-        <div>
-          <a href="javascript;">Login</a>
-        </div> */}
       </header>
     );
   }

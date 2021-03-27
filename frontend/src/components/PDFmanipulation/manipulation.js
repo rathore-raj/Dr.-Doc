@@ -4,11 +4,14 @@ import { withRouter } from "react-router-dom";
 import { DropzoneArea } from "material-ui-dropzone";
 import "./manipulation.css";
 import axios from "axios";
+import FileSaver from "file-saver";
+import CircularIndeterminate from "../progressBar/progressBar";
 
 class Manipulation extends react.Component {
   constructor(props) {
     super(props);
     this.state = {
+      progressBar: false,
       message: null,
       link: "",
       password: "",
@@ -16,34 +19,47 @@ class Manipulation extends react.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const index = props.location.state.index;
-    const data = array[index];
-    return {
-      ...data,
-    };
+    if (props.location.state) {
+      const index = props.location.state.index;
+      const data = array[index];
+      return {
+        ...data,
+      };
+    } else {
+      props.history.push("/");
+    }
   }
 
   onRequest = (url, formData) => {
-    // const config = {
-    //   responseType: "arraybuffer",
-    // };
-    return axios.post(url, formData);
+    let options = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      responseType: "arraybuffer",
+    };
+    return axios.post(url, formData, options);
   };
 
   onFileUpload = (event) => {
     if (event.length) {
       console.log("event", event[0]);
+      this.setState({
+        progressBar: true,
+      });
       if (this.state.url === "http://localhost:3000/convert") {
         const formData = new FormData();
         formData.append("avatar", event[0], event[0].name);
 
-        this.onRequest(this.state.url, formData)
+        axios
+          .post(this.state.url, formData)
           .then((response) => {
             console.log("response:", response);
+
             const link = response.data.File_Download_Link;
             this.setState({
               message: "Click Here To Download PDF",
               link: link,
+              progressBar: false,
             });
           })
           .catch((error) => {
@@ -57,9 +73,14 @@ class Manipulation extends react.Component {
         this.onRequest(this.state.url, formData)
           .then((response) => {
             console.log("response:", response);
-            const message = response.data.Message;
+            FileSaver.saveAs(
+              new Blob([response.data], { type: "application/pdf" }),
+              `merged-${event[0].name}`
+            );
+            // const message = response.data.Message;
             this.setState({
-              message: `${message} Check Public Folder for File`,
+              message: "Check Download Folder",
+              progressBar: false,
             });
           })
           .catch((error) => {
@@ -68,12 +89,14 @@ class Manipulation extends react.Component {
       } else if (this.state.url === "http://localhost:3000/upload") {
         const formData = new FormData();
         formData.append("photo", event[0], event[0].name);
-        this.onRequest(this.state.url, formData)
+        axios
+          .post(this.state.url, formData)
           .then((response) => {
             console.log("response:", response);
             const message = response.data.text;
             this.setState({
               message: message,
+              progressBar: false,
             });
           })
           .catch((error) => {
@@ -90,13 +113,18 @@ class Manipulation extends react.Component {
           this.onRequest(this.state.url, formData)
             .then((response) => {
               console.log("response:", response);
-              const message = response.data.Message;
+              FileSaver.saveAs(
+                new Blob([response.data], { type: "application/pdf" }),
+                event[0].name
+              );
+              // const message = response.data.Message;
               this.setState({
-                message: `${message} Check Public Folder for File`,
+                message: "Check Download Folder",
+                progressBar: false,
               });
             })
             .catch((error) => {
-              console.log("error:", error);
+              console.log("error:", error.message);
             });
         }
       } else {
@@ -106,29 +134,21 @@ class Manipulation extends react.Component {
         this.onRequest(this.state.url, formData)
           .then((response) => {
             console.log("response:", response);
-            console.log("data:", response.data);
-            const message = response.data.Message;
+
+            FileSaver.saveAs(
+              new Blob([response.data], { type: "application/pdf" }),
+              event[0].name
+            );
+
             this.setState({
-              message: `${message} Check Public Folder for File`,
+              message: "Check Download Folder",
+              progressBar: false,
             });
           })
           .catch((error) => {
             console.log("error:", error);
           });
       }
-
-      // axios
-      //   .post(this.state.url, formData)
-      //   .then((response) => {
-      //     console.log("response:", response);
-      //     const message = response.data.Message;
-      //     this.setState({
-      //       message: `${message} Check Public Folder for File`,
-      //     });
-      //   })
-      //   .catch((error) => {
-      //     console.log("error:", error);
-      //   });
     }
   };
 
@@ -138,6 +158,7 @@ class Manipulation extends react.Component {
       password: value,
     });
   };
+
   handleClose = () => {
     this.setState({
       message: null,
@@ -150,7 +171,10 @@ class Manipulation extends react.Component {
     console.log("data in state", this.state);
     return (
       <div className="main-div">
-        <h2>{this.state.Title}</h2>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {this.state.Icon}
+          <h1 style={{ margin: "0", marginLeft: "5px" }}>{this.state.Title}</h1>
+        </div>
         <p>{this.state.Details}</p>
 
         {this.state.temp ? (
@@ -181,6 +205,7 @@ class Manipulation extends react.Component {
         {this.state.link ? (
           <a href={this.state.link}>{this.state.link}</a>
         ) : null}
+        {this.state.progressBar ? <CircularIndeterminate /> : false}
       </div>
     );
   }

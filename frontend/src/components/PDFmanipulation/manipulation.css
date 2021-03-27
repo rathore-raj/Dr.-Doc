@@ -1,11 +1,13 @@
 .main-div {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   text-transform: capitalize;
-  padding: 120px;
+  padding: 40px 120px;
   font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
-  height: 100%;
   background-color: rgb(244, 244, 244);
+  padding-bottom: 228px;
 }
 .main-div p {
-    margin-bottom: 60px;
+  margin-bottom: 50px;
 }

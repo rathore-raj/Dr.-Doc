@@ -14,6 +14,9 @@ class Main extends react.Component {
           <Route exact path="/manpulation">
             <Manipulation />
           </Route>
+          <Route path="/*">
+            <App />
+          </Route>
         </Switch>
       </Router>
     );

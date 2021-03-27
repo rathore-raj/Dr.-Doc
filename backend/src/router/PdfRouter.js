@@ -26,20 +26,29 @@ const sdk = new ilovepdfSDK(
 
 const router = express.Router();
 
+const PDFInReponse = (path, res, name) => {
+  var file = fs.createReadStream(path);
+  var stat = fs.statSync(path);
+  res.setHeader("Content-Length", stat.size);
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", "attachment; filename=quote.pdf");
+  file.pipe(res);
+};
+
 router.post("/compression", upload.single("avatar"), async (req, res) => {
+  console.log("file",req.file)
   try {
     const task = await sdk.createTask("compress");
     await task.addFile(req.file.path);
     await task.process({ CompressionLevel: "extreme" });
-    const PDF = await task.download(
+    await task.download(
       `${appDir}/public/output/compressed-${req.file.originalname}`
     );
-    var data = fs.readFileSync(
-      `${appDir}/public/output/compressed-${req.file.originalname}`
+    PDFInReponse(
+      `${appDir}/public/output/compressed-${req.file.originalname}`,
+      res,
+      `compressed-${req.file.originalname}`
     );
-    res.contentType("application/pdf");
-    res.status(200).send({ data, Message: "Compression Successful" });
-    // res.status(200).send({ Message: "Compression Successful" });
   } catch (e) {
     res.status(400).send({ Error: e.message });
   }
@@ -56,11 +65,15 @@ router.post("/encrypt", upload.single("avatar"), async (req, res) => {
       },
       "pdf"
     )
-    .then(function (result) {
-      result.saveFiles(
+    .then(async (result) => {
+      await result.saveFiles(
         `${appDir}/public/output/encrypted-${req.file.originalname}`
       );
-      res.status(200).send({ Message: "PDF encrypted!" });
+      PDFInReponse(
+        `${appDir}/public/output/encrypted-${req.file.originalname}`,
+        res
+      );
+      // res.status(200).send({ Message: "PDF encrypted!" });
     })
     .catch((error) => {
       res.status(400).send({ Error: error.message });
@@ -74,11 +87,15 @@ router.post("/decrypt", upload.single("avatar"), async (req, res) => {
       { File: req.file.path, Password: req.body.password },
       "pdf"
     )
-    .then(function (result) {
-      result.saveFiles(
+    .then(async (result) => {
+      await result.saveFiles(
         `${appDir}/public/output/decrypted-${req.file.originalname}`
       );
-      res.status(200).send({ Message: "PDF decrypted!" });
+      PDFInReponse(
+        `${appDir}/public/output/decrypted-${req.file.originalname}`,
+        res
+      );
+      // res.status(200).send({ Message: "PDF decrypted!" });
     })
     .catch((error) => {
       res.status(400).send({ Error: error.message });
@@ -93,7 +110,11 @@ router.post("/unlock", upload.single("avatar"), async (req, res) => {
     await task.download(
       `${appDir}/public/output/Unlocked-${req.file.originalname}`
     );
-    res.status(200).send({ Message: "Unlock Successful" });
+    PDFInReponse(
+      `${appDir}/public/output/Unlocked-${req.file.originalname}`,
+      res
+    );
+    // res.status(200).send({ Message: "Unlock Successful" });
   } catch (e) {
     res.status(400).send({ Error: e.message });
   }
@@ -107,34 +128,31 @@ router.post("/pageNumber", upload.single("avatar"), async (req, res) => {
     await task.download(
       `${appDir}/public/output/Page_Number_Added-${req.file.originalname}`
     );
-    res.status(200).send({ Message: "Page Number Added" });
+    PDFInReponse(
+      `${appDir}/public/output/Page_Number_Added-${req.file.originalname}`,
+      res
+    );
+    // res.status(200).send({ Message: "Page Number Added" });
   } catch (e) {
     res.status(400).send({ Error: e.message });
   }
 });
 
-router.post(
-  "/merge",
-  upload.array("avatar"),
-  (req, res) => {
-    const paths = req.files.map((file) => file.path);
-    merge(
-      paths,
-      `${appDir}/public/output/Merged-${req.files[0].originalname}`,
-      (err) => {
-        if (err) {
-          throw new Error(err);
-        }
-        res.status(200).send({ Message: "Success!" });
+router.post("/merge", upload.array("avatar"), async (req, res) => {
+  const paths = req.files.map((file) => file.path);
+  const name = req.files[0].originalname;
+  merge(
+    paths,
+    `${appDir}/public/output/Merged-${req.files[0].originalname}`,
+    (err) => {
+      if (err) {
+        throw new Error(err);
       }
-    );
-  },
-  (error, req, res, next) => {
-    res.status(400).send({
-      error: error.message,
-    });
-  }
-);
+      PDFInReponse(`${appDir}/public/output/Merged-${name}`, res);
+      // res.status(200).send({ Message: "Success!" });
+    }
+  );
+});
 
 router.post("/convert", upload.single("avatar"), (req, res) => {
   if (
@@ -145,7 +163,6 @@ router.post("/convert", upload.single("avatar"), (req, res) => {
     convertapi
       .convert("pdf", { File: req.file.path })
       .then((result) => {
-        // res.download(result.file.fileInfo.Url)
         res.status(200).send({ File_Download_Link: result.file.fileInfo.Url });
       })
       .catch((error) => {
