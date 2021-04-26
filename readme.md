@@ -28,11 +28,8 @@
 #### create API key files
 
 * see the demo files.
-<<<<<<< HEAD
 * Create a `dev.env` file in `root`( here `/backend`) which Includes All the API Keys(you need to create developer account on convert Api and ilovepdf api for all api keys)
-=======
 * Create a `dev.env` file in `root`( here `/backend`) which Includes All the API Keys
->>>>>>> 29771b8713820d4c9938353d5db0c22a2a5b6427
 * create `g_client.json` file in `/src` (here `/backend/src`) Which Include All The gVision API Keys.
 
 #### installing dependencies
