@@ -25,13 +25,6 @@
 
 | name | method | route | working | 
 | :---: | :---: | :---: | :---: |
-| Login | post | localhost:3000/users/login | Y |
-| Add User | post | localhost:3000/users | Y |
-| Logout | post | localhost:3000/users/logout | Y |
-| Logout from all devices | post | localhost:3000/users/logoutAll | Y |
-| delete user | del | localhost:3000/users/me | Y |
-| about me | get | localhost:3000/users/me | Y |
-| update user | patch | localhost:3000/users/me | Y |
 | pdf merge | post | localhost:3000/merge | Y |
 | files to pdf | post | localhost:3000/convert | Y |
 | text reco. from photo | post | localhost:3000/upload | Y |
