@@ -1,6 +1,4 @@
 const express = require("express");
-require("./db/mongoose.js");
-const userRouter = require("./router/user");
 const cors = require("cors");
 const PdfRouter = require("./router/PdfRouter");
 
@@ -9,7 +7,6 @@ const port = process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
-app.use(userRouter);
 app.use(PdfRouter);
 
 app.get("/", (req, res) => {

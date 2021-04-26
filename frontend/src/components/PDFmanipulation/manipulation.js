@@ -64,6 +64,10 @@ class Manipulation extends react.Component {
           })
           .catch((error) => {
             console.log("error:", error);
+            this.setState({
+              message: error.message,
+              progressBar: false,
+            });
           });
       } else if (this.state.url === "http://localhost:3000/merge") {
         const formData = new FormData();
@@ -85,6 +89,10 @@ class Manipulation extends react.Component {
           })
           .catch((error) => {
             console.log("error:", error);
+            this.setState({
+              message: error.message,
+              progressBar: false,
+            });
           });
       } else if (this.state.url === "http://localhost:3000/upload") {
         const formData = new FormData();
@@ -101,6 +109,10 @@ class Manipulation extends react.Component {
           })
           .catch((error) => {
             console.log("error:", error);
+            this.setState({
+              message: error.message,
+              progressBar: false,
+            });
           });
       } else if (
         this.state.url === "http://localhost:3000/encrypt" ||
@@ -124,7 +136,11 @@ class Manipulation extends react.Component {
               });
             })
             .catch((error) => {
-              console.log("error:", error.message);
+              console.log("error:", error);
+              this.setState({
+                message: error.message,
+                progressBar: false,
+              });
             });
         }
       } else {
@@ -147,6 +163,10 @@ class Manipulation extends react.Component {
           })
           .catch((error) => {
             console.log("error:", error);
+            this.setState({
+              message: error.message,
+              progressBar: false,
+            });
           });
       }
     }
@@ -164,6 +184,7 @@ class Manipulation extends react.Component {
       message: null,
       link: "",
       password: "",
+      progressBar: false,
     });
   };
 
