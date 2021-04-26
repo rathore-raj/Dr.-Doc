@@ -1,5 +1,11 @@
 # Dr.DOC
 
+* The WebApp developed in React.js and Node.js will provide the features like…
+> Scanning paper to get digital text
+> Storing it as PDF files
+> Sharing and other functionalities.
+> Handwritten text Recognition, Merge, Convert, Compress.
+
 
 ## Frontend
 
