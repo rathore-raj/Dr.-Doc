@@ -34,12 +34,12 @@
 | update user | patch | localhost:3000/users/me | Y |
 | pdf merge | post | localhost:3000/merge | Y |
 | files to pdf | post | localhost:3000/convert | Y |
-| text reco. from photo | post | localhost:3000/upload | Y* (where file saved?) |
+| text reco. from photo | post | localhost:3000/upload | Y |
 | pdf compression | post | localhost:3000/compression | Y |
 | add page number | post | localhost:3000/pageNumber | Y |
 | encrypt pdf | post | localhost:3000/encrypt | Y |
 | decrypt pdf | post | localhost:3000/decrypt | Y |
-| unlock pdf | post | localhost:3000/unlock | Y*(not tested completly) |
+| unlock pdf | post | localhost:3000/unlock | Y |
 
 * Output files will be stored at `backend/src/public/output` folder.
 * Test documents can be found at `/test documents` folder.
@@ -47,4 +47,14 @@
 
 ## Frontend
 
-soon
+### local setup  instructions
+
+> cd ./frontend  
+> npm install  
+> npm start  
+
+### screenshots
+
+![home page / Dr.Doc webapp](./showcase/webapp-screenshot.png)
+
+![drop page / Dr.Doc webapp](./showcase/webapp-droppage.png)
