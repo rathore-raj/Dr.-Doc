@@ -6,142 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "Login",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"if (pm.response.code === 200) {\r",
-							"    pm.environment.set('authToken', pm.response.json().token)\r",
-							"        pm.globals.set(\"authToken\", pm.response.json().token)\r",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"raj.albiorix@gmail.com\",\r\n    \"password\":\"raj123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/users/login",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"if (pm.response.code === 201) {\r",
-							"    pm.environment.set('authToken', pm.response.json().token)\r",
-							"    pm.globals.set(\"authToken\", pm.response.json().token)\r",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer ",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"Raj\",\r\n    \"email\":\"raj.albiorix@gmail.com\",\r\n    \"password\":\"raj123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/users",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "About Me",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/users/me",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users",
-						"me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update User",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"raj@g.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/users/me",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users",
-						"me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Pdf Merge",
 			"request": {
 				"method": "POST",
@@ -153,8 +17,8 @@
 							"key": "avatar",
 							"type": "file",
 							"src": [
-								"/D:/OF And Noc/NOC.pdf",
-								"/D:/OF And Noc/Raj_OL.pdf"
+								"/C:/Users/Raj Rathore/Downloads/170770116098_python_IT_Lab manual.pdf",
+								"/C:/Users/Raj Rathore/Downloads/170770116098_AI Manual_2021.pdf"
 							]
 						}
 					]
@@ -183,7 +47,7 @@
 						{
 							"key": "avatar",
 							"type": "file",
-							"src": "/home/albiorix/Desktop/Dr. Doc/Screenshot_2020-09-05-15-44-44-758_com.android.chrome.jpg"
+							"src": "/D:/Documents/DR Doc Documents/DR DOC REPORT.docx"
 						}
 					]
 				},
@@ -373,125 +237,6 @@
 					"port": "3000",
 					"path": [
 						"unlock"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete User",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/users/me",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users",
-						"me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "1 forget password",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"raj.albiorix@gmail.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/forgetPassword",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"forgetPassword"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "2 verify otp",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"raj.albiorix@gmail.com\",\r\n    \"otp\":\"7453\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/OtpVerify",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"OtpVerify"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "3 reset password",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n     \"email\":\"raj.albiorix@gmail.com\",\r\n    \"password\":\"1234567\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/resetPassword",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"resetPassword"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Logout",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/users/logout",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users",
-						"logout"
 					]
 				}
 			},
