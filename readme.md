@@ -28,7 +28,7 @@
 #### create API key files
 
 * see the demo files.
-* Create a `dev.env` file in `root`( here `/backend`) which Includes All the API Keys And mongodb Path.
+* Create a `dev.env` file in `root`( here `/backend`) which Includes All the API Keys
 * create `g_client.json` file in `/src` (here `/backend/src`) Which Include All The gVision API Keys.
 
 #### installing dependencies
