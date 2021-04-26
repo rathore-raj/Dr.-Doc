@@ -11,3 +11,10 @@
 .main-div p {
   margin-bottom: 50px;
 }
+.home-btn a {
+  color: #f23030;
+}
+
+.home-btn {
+  margin-bottom: 40px;
+}

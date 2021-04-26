@@ -28,7 +28,7 @@
 #### create API key files
 
 * see the demo files.
-* Create a `dev.env` file in `root`( here `/backend`) which Includes All the API Keys And mongodb Path.
+* Create a `dev.env` file in `root`( here `/backend`) which Includes All the API Keys(you need to create developer account on convert Api and ilovepdf api for all api keys)
 * create `g_client.json` file in `/src` (here `/backend/src`) Which Include All The gVision API Keys.
 
 #### installing dependencies
@@ -40,7 +40,7 @@
 #### starting local API server
 
 > npm start
-* may start on `localhost:3000` or at specified port
+* may start on `localhost:3050` or at specified port
 
 ### API routes
 
@@ -51,7 +51,7 @@
 | text reco. from photo | post | localhost:3000/upload | Y |
 | pdf compression | post | localhost:3000/compression | Y |
 | add page number | post | localhost:3000/pageNumber | Y |
-| encrypt pdf | post | localhost:3000/encrypt | Y |
+| encrypt pdf | post | localhost:3000/encrypt | N |
 | decrypt pdf | post | localhost:3000/decrypt | Y |
 | unlock pdf | post | localhost:3000/unlock | Y |
 

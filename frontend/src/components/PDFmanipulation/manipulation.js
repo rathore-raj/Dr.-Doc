@@ -7,6 +7,9 @@ import axios from "axios";
 import FileSaver from "file-saver";
 import CircularIndeterminate from "../progressBar/progressBar";
 
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
 class Manipulation extends react.Component {
   constructor(props) {
     super(props);
@@ -36,6 +39,7 @@ class Manipulation extends react.Component {
         "Content-Type": "application/json",
       },
       responseType: "arraybuffer",
+      cancelToken: source.token,
     };
     return axios.post(url, formData, options);
   };
@@ -46,12 +50,12 @@ class Manipulation extends react.Component {
       this.setState({
         progressBar: true,
       });
-      if (this.state.url === "http://localhost:3000/convert") {
+      if (this.state.url === "http://localhost:3050/convert") {
         const formData = new FormData();
         formData.append("avatar", event[0], event[0].name);
 
         axios
-          .post(this.state.url, formData)
+          .post(this.state.url, formData, { cancelToken: source.token })
           .then((response) => {
             console.log("response:", response);
 
@@ -69,36 +73,43 @@ class Manipulation extends react.Component {
               progressBar: false,
             });
           });
-      } else if (this.state.url === "http://localhost:3000/merge") {
-        const formData = new FormData();
-        formData.append("avatar", event[0], event[0].name);
-        formData.append("avatar", event[1], event[1].name);
+      } else if (this.state.url === "http://localhost:3050/merge") {
+        if (event.length > 1) {
+          const formData = new FormData();
+          formData.append("avatar", event[0], event[0].name);
+          formData.append("avatar", event[1], event[1].name);
 
-        this.onRequest(this.state.url, formData)
-          .then((response) => {
-            console.log("response:", response);
-            FileSaver.saveAs(
-              new Blob([response.data], { type: "application/pdf" }),
-              `merged-${event[0].name}`
-            );
-            // const message = response.data.Message;
-            this.setState({
-              message: "Check Download Folder",
-              progressBar: false,
+          this.onRequest(this.state.url, formData)
+            .then((response) => {
+              console.log("response:", response);
+              FileSaver.saveAs(
+                new Blob([response.data], { type: "application/pdf" }),
+                `merged-${event[0].name}`
+              );
+              // const message = response.data.Message;
+              this.setState({
+                message: "Check Download Folder",
+                progressBar: false,
+              });
+            })
+            .catch((error) => {
+              console.log("error:", error);
+              this.setState({
+                message: error.message,
+                progressBar: false,
+              });
             });
-          })
-          .catch((error) => {
-            console.log("error:", error);
-            this.setState({
-              message: error.message,
-              progressBar: false,
-            });
+        } else {
+          this.setState({
+            message: "Upload more Than 1 File",
+            progressBar: false,
           });
-      } else if (this.state.url === "http://localhost:3000/upload") {
+        }
+      } else if (this.state.url === "http://localhost:3050/upload") {
         const formData = new FormData();
         formData.append("photo", event[0], event[0].name);
         axios
-          .post(this.state.url, formData)
+          .post(this.state.url, formData, { cancelToken: source.token })
           .then((response) => {
             console.log("response:", response);
             const message = response.data.text;
@@ -108,15 +119,15 @@ class Manipulation extends react.Component {
             });
           })
           .catch((error) => {
-            console.log("error:", error);
+            console.log("error:", error.response);
             this.setState({
               message: error.message,
               progressBar: false,
             });
           });
       } else if (
-        this.state.url === "http://localhost:3000/encrypt" ||
-        this.state.url === "http://localhost:3000/decrypt"
+        this.state.url === "http://localhost:3050/encrypt" ||
+        this.state.url === "http://localhost:3050/decrypt"
       ) {
         if (this.state.password !== "") {
           const formData = new FormData();
@@ -162,7 +173,7 @@ class Manipulation extends react.Component {
             });
           })
           .catch((error) => {
-            console.log("error:", error);
+            console.log("error1:", error.response);
             this.setState({
               message: error.message,
               progressBar: false,
@@ -180,6 +191,11 @@ class Manipulation extends react.Component {
   };
 
   handleClose = () => {
+    if (this.state.progressBar) {
+      source.cancel();
+      window.location.reload();
+    }
+
     this.setState({
       message: null,
       link: "",
@@ -192,6 +208,9 @@ class Manipulation extends react.Component {
     console.log("data in state", this.state);
     return (
       <div className="main-div">
+        <div className="home-btn">
+          <a href="/">Back To Home</a>
+        </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           {this.state.Icon}
           <h1 style={{ margin: "0", marginLeft: "5px" }}>{this.state.Title}</h1>
@@ -220,6 +239,7 @@ class Manipulation extends react.Component {
           showPreviewsInDropzone={true}
           clearOnUnmount={true}
           onDelete={this.handleClose}
+          acceptedFiles={this.state.fileType}
         />
         <br></br>
         <p>{this.state.message}</p>
