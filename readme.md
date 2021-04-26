@@ -1,5 +1,20 @@
 # Dr.DOC
 
+
+## Frontend
+
+### local setup  instructions
+
+> cd ./frontend  
+> npm install  
+> npm start  
+
+### screenshots
+
+![home page / Dr.Doc webapp](./showcase/webapp-screenshot.png)
+
+![drop page / Dr.Doc webapp](./showcase/webapp-droppage.png)
+
 ## Backend
 
 ### local setup  instructions
@@ -36,18 +51,3 @@
 
 * Output files will be stored at `backend/src/public/output` folder.
 * Test documents can be found at `/test documents` folder.
-
-
-## Frontend
-
-### local setup  instructions
-
-> cd ./frontend  
-> npm install  
-> npm start  
-
-### screenshots
-
-![home page / Dr.Doc webapp](./showcase/webapp-screenshot.png)
-
-![drop page / Dr.Doc webapp](./showcase/webapp-droppage.png)
