@@ -47,14 +47,14 @@
 
 | name | method | route | working | 
 | :---: | :---: | :---: | :---: |
-| pdf merge | post | localhost:3000/merge | Yes |
-| files to pdf | post | localhost:3000/convert | Yes |
-| text reco. from photo | post | localhost:3000/upload | Yes |
-| pdf compression | post | localhost:3000/compression | Yes |
-| add page number | post | localhost:3000/pageNumber | Yes |
-| encrypt pdf | post | localhost:3000/encrypt | No |
-| decrypt pdf | post | localhost:3000/decrypt | Yes |
-| unlock pdf | post | localhost:3000/unlock | Yes |
+| pdf merge | post | localhost:3050/merge | Yes |
+| files to pdf | post | localhost:3050/convert | Yes |
+| text reco. from photo | post | localhost:3050/upload | Yes |
+| pdf compression | post | localhost:3050/compression | Yes |
+| add page number | post | localhost:3050/pageNumber | Yes |
+| encrypt pdf | post | localhost:3050/encrypt | No |
+| decrypt pdf | post | localhost:3050/decrypt | Yes |
+| unlock pdf | post | localhost:3050/unlock | Yes |
 
 * Output files will be stored at `backend/src/public/output` folder.
 * Test documents can be found at `/test documents` folder.
